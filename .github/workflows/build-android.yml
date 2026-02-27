@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android AAB
 
 on:
   push:
@@ -37,13 +37,29 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Build Release AAB
+      - name: Generate Keystore
+        run: |
+          keytool -genkeypair \
+            -keystore instacord.keystore \
+            -alias instacord \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass InstaCord2024! \
+            -keypass InstaCord2024! \
+            -dname "CN=INSTA-CORD, OU=App, O=INSTA-CORD, L=US, ST=US, C=US"
+
+      - name: Build & Sign Release AAB
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew bundleRelease
+          ./gradlew bundleRelease \
+            -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/instacord.keystore \
+            -Pandroid.injected.signing.store.password=InstaCord2024! \
+            -Pandroid.injected.signing.key.alias=instacord \
+            -Pandroid.injected.signing.key.password=InstaCord2024!
 
-      - name: Upload AAB
+      - name: Upload Signed AAB
         uses: actions/upload-artifact@v4
         with:
           name: INSTA-CORD-release
