@@ -40,7 +40,7 @@ jobs:
       - name: Generate Keystore
         run: |
           keytool -genkeypair \
-            -keystore instacord.keystore \
+            -keystore $GITHUB_WORKSPACE/instacord.keystore \
             -alias instacord \
             -keyalg RSA \
             -keysize 2048 \
@@ -49,15 +49,13 @@ jobs:
             -keypass InstaCord2024! \
             -dname "CN=INSTA-CORD, OU=App, O=INSTA-CORD, L=US, ST=US, C=US"
 
-      - name: Build & Sign Release AAB
+      - name: Build Signed Release AAB
+        env:
+          KEYSTORE_PATH: ${{ github.workspace }}/instacord.keystore
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew bundleRelease \
-            -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/instacord.keystore \
-            -Pandroid.injected.signing.store.password=InstaCord2024! \
-            -Pandroid.injected.signing.key.alias=instacord \
-            -Pandroid.injected.signing.key.password=InstaCord2024!
+          ./gradlew bundleRelease
 
       - name: Upload Signed AAB
         uses: actions/upload-artifact@v4
