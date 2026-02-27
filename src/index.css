@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gunmetal: #0f1419;
+  --color-gunmetal-light: #1a1f24;
+  --color-gunmetal-mid: #1a2428;
+  --color-gunmetal-border: #2a3439;
+  --color-gunmetal-hover: #3a464d;
+  --color-neon-cyan: #00f0ff;
+  --color-neon-purple: #ff00e6;
+  --color-neon-green: #00ff88;
+  --color-neon-yellow: #b4ff00;
+  --color-neon-red: #ff0055;
+  --color-neon-gold: #ffd700;
+  --color-text-light: #e8eaed;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: #0f1419;
+  color: #e8eaed;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #1a1f24; }
+::-webkit-scrollbar-thumb { background: #2a3439; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3a464d; }
+
+.neon-glow-cyan { box-shadow: 0 0 10px rgba(0,240,255,0.3), 0 0 20px rgba(0,240,255,0.1); }
+.neon-glow-green { box-shadow: 0 0 10px rgba(0,255,136,0.3), 0 0 20px rgba(0,255,136,0.1); }
+.neon-glow-purple { box-shadow: 0 0 10px rgba(255,0,230,0.3), 0 0 20px rgba(255,0,230,0.1); }
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.pulse-glow { animation: pulse-glow 1.5s ease-in-out infinite; }
+
+@keyframes waveform {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+.waveform-bar { animation: waveform 0.8s ease-in-out infinite; }
+.waveform-bar:nth-child(2) { animation-delay: 0.1s; }
+.waveform-bar:nth-child(3) { animation-delay: 0.2s; }
+.waveform-bar:nth-child(4) { animation-delay: 0.3s; }
+.waveform-bar:nth-child(5) { animation-delay: 0.15s; }

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">INSTA-CORD</string>
+    <string name="title_activity_main">INSTA-CORD</string>
+    <string name="package_name">com.instacord.app</string>
+    <string name="custom_url_scheme">com.instacord.app</string>
+</resources>
