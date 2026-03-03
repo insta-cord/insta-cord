@@ -6,6 +6,7 @@ import Teleprompter from './components/Teleprompter'
 import CloudVault from './components/CloudVault'
 import PricingTiers from './components/PricingTiers'
 import UserDashboard from './components/UserDashboard'
+import Settings from './components/Settings'
 
 const NAV_ITEMS = [
   { id: 'studio', label: 'Studio', icon: '🎙' },
@@ -13,6 +14,7 @@ const NAV_ITEMS = [
   { id: 'vault', label: 'Cloud Vault', icon: '☁' },
   { id: 'pricing', label: 'Pricing', icon: '💎' },
   { id: 'dashboard', label: 'Dashboard', icon: '👤' },
+  { id: 'settings', label: 'Settings', icon: '⚙️' },
 ]
 
 function LoginPage({ onLogin }: { onLogin: () => void }) {
@@ -303,6 +305,7 @@ export default function App() {
           {activeTab === 'vault' && <CloudVault />}
           {activeTab === 'pricing' && <PricingTiers />}
           {activeTab === 'dashboard' && <UserDashboard />}
+          {activeTab === 'settings' && <Settings />}
         </main>
       </div>
 
