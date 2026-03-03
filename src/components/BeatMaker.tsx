@@ -19,11 +19,20 @@ const PRESETS = {
 
 const TRACK_COLORS = ['#00f0ff', '#ff00e6', '#00ff88', '#ffd700']
 
-export default function BeatMaker() {
-  const [pattern, setPattern] = useState<number[][]>(
-    Array(TRACKS.length).fill(null).map(() => Array(STEPS).fill(0))
-  )
-  const [bpm, setBpm] = useState(90)
+interface Props {
+  autoPreset?: string
+}
+
+export default function BeatMaker({ autoPreset }: Props) {
+  const getInitialPattern = () => {
+    if (autoPreset && PRESETS[autoPreset as keyof typeof PRESETS]) {
+      return PRESETS[autoPreset as keyof typeof PRESETS].map(r => [...r])
+    }
+    return Array(TRACKS.length).fill(null).map(() => Array(STEPS).fill(0))
+  }
+
+  const [pattern, setPattern] = useState<number[][]>(getInitialPattern)
+  const [bpm, setBpm] = useState(autoPreset === 'Trap' ? 140 : 90)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentStep, setCurrentStep] = useState(-1)
   const intervalRef = { current: null as ReturnType<typeof setInterval> | null }

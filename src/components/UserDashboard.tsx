@@ -83,7 +83,7 @@ export default function UserDashboard() {
                 <button onClick={handleLogin}
                   className="text-xs px-3 py-1 rounded-full font-medium"
                   style={{ background: 'rgba(0,240,255,0.15)', color: '#00f0ff', border: '1px solid rgba(0,240,255,0.3)' }}>
-                  Login / Sign Up
+                  Sign In with Google
                 </button>
               )}
             </div>
