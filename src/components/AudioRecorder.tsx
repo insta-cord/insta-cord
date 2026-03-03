@@ -16,7 +16,7 @@ interface Props {
 
 export default function AudioRecorder({ onRecordingSaved, onGenerateBeat }: Props) {
   const [isRecording, setIsRecording] = useState(false)
-  const [isListening, setIsListening] = useState(false)
+  const [isListening, setIsListening] = useState(true)
   const [lyrics, setLyrics] = useState('')
   const [recordings, setRecordings] = useState<Recording[]>([])
   const [sensitivity, setSensitivity] = useState(50)
@@ -63,10 +63,15 @@ export default function AudioRecorder({ onRecordingSaved, onGenerateBeat }: Prop
   }
 
   const getMicLevel = (analyser: AnalyserNode) => {
-    const data = new Uint8Array(analyser.frequencyBinCount)
-    analyser.getByteFrequencyData(data)
-    const avg = data.reduce((a, b) => a + b, 0) / data.length
-    return avg
+    const data = new Uint8Array(analyser.fftSize)
+    analyser.getByteTimeDomainData(data)
+    // Compute RMS amplitude — silence = 128 (midpoint), loud = deviation from 128
+    let sum = 0
+    for (let i = 0; i < data.length; i++) {
+      const deviation = data[i] - 128
+      sum += deviation * deviation
+    }
+    return Math.sqrt(sum / data.length)
   }
 
   const startRecording = async () => {
@@ -216,7 +221,8 @@ export default function AudioRecorder({ onRecordingSaved, onGenerateBeat }: Prop
     let audioCtx: AudioContext
     let analyser: AnalyserNode
     let animFrame: number
-    const threshold = 100 - sensitivity
+    // sensitivity 0-100 → threshold 30-3 (lower sensitivity = higher threshold = needs louder voice)
+    const threshold = 3 + (100 - sensitivity) * 0.27
 
     const startListening = async () => {
       try {
