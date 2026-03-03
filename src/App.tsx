@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import './index.css'
 import Nxcode from '@nxcode/sdk'
+
+// Register this app with the Nxcode platform so auth & payments work on any domain
+Nxcode.configure('746b02b7-0eea-44ce-bc0e-dc830c958059')
 import RecordingStudio from './components/RecordingStudio'
 import Teleprompter from './components/Teleprompter'
 import CloudVault from './components/CloudVault'
